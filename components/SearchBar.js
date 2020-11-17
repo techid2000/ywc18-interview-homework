@@ -19,7 +19,7 @@ const mockLocations = [
   { label: 'ระยอง', value: 'rayong' },
 ];
 
-const SearchBar = () => {
+const SearchBar = ({ setDrawerVisible }) => {
   return (
     <div className="flex items-center w-full">
       <div className="flex items-center border border-gray-400 shadow-sm rounded-lg w-full h-10 overflow-hidden">
@@ -57,7 +57,8 @@ const SearchBar = () => {
         type="text"
         shape="circle"
         className="w-auto px-4 md:hidden"
-        icon={<FilterOutlined class="text-2xl" />}
+        icon={<FilterOutlined className="text-2xl" />}
+        onClick={() => setDrawerVisible(true)}
       />
     </div>
   );

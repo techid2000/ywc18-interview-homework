@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import Image from 'next/image';
 
 import SearchBar from './SearchBar';
@@ -6,6 +8,7 @@ import SearchFiltersDrawer from './SearchFiltersDrawer';
 import './AppSearchBar.scss';
 
 const AppSearchBar = () => {
+  const [visible, setVisible] = useState(false);
   return (
     <>
       <div className="flex w-full h-16 justify-center items-center">
@@ -21,10 +24,10 @@ const AppSearchBar = () => {
               <Image src={'/logo-mini.png'} width={57.86} height={40} />
             </div>
           </div>
-          <SearchBar />
+          <SearchBar setDrawerVisible={setVisible} />
         </div>
       </div>
-      <SearchFiltersDrawer />
+      <SearchFiltersDrawer visible={visible} setDrawerVisible={setVisible} />
     </>
   );
 };
