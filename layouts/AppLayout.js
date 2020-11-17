@@ -4,7 +4,12 @@ const AppLayout = ({ children }) => {
   return (
     <>
       <AppHeader />
-      {children}
+      <div
+        className="px-4 py-8 md:py-4 w-full mx-auto"
+        style={{ maxWidth: '1600px' }}
+      >
+        {children}
+      </div>
     </>
   );
 };
