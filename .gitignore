@@ -32,3 +32,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# tailwindcss
+scss/tailwind-build.scss
