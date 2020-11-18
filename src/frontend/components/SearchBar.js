@@ -6,6 +6,8 @@ import './SearchBar.scss';
 import useSearchMeta from '../hooks/useSearchMeta';
 import { useSearchController } from '../hooks/useSearch';
 
+import { LOCATIONS } from '../../constants/searchConstants';
+
 const SearchBar = ({ setDrawerVisible }) => {
   const searchMeta = useSearchMeta();
 
@@ -23,9 +25,13 @@ const SearchBar = ({ setDrawerVisible }) => {
       <div className="flex items-center border border-gray-400 shadow-sm rounded-lg w-full h-10 overflow-hidden">
         <Select
           bordered={false}
-          options={searchMeta.provinces.map((province) => ({
-            label: province,
-            value: province,
+          options={[
+            LOCATIONS.NEAR_ME,
+            LOCATIONS.ALL,
+            ...searchMeta.provinces,
+          ].map((location) => ({
+            label: location,
+            value: location,
           }))}
           value={addressProvinceName}
           onChange={(value) => setAddressProvinceName(value)}
