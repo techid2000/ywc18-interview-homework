@@ -2,14 +2,14 @@ import dynamic from 'next/dynamic';
 
 import { Card, Space } from 'antd';
 
-import AppLayout from '../../layouts/AppLayout';
-import SearchFiltersSidebar from '../../components/SearchFiltersSidebar';
-import SearchResultMerchantList from '../../components/SearchResultMerchantList';
+import AppLayout from '../../src/frontend/layouts/AppLayout';
+import SearchFiltersSidebar from '../../src/frontend/components/SearchFiltersSidebar';
+import SearchResultMerchantList from '../../src/frontend/components/SearchResultMerchantList';
 
-import useSearch from '../../hooks/useSearch';
+import useSearch from '../../src/frontend/hooks/useSearch';
 import { getSearchMeta } from '../../src/frontend/api/searchAPI';
-import SearchContext from '../../contexts/SearchContext';
-import SearchMetaContext from '../../contexts/SearchMetaContext';
+import SearchContext from '../../src/frontend/contexts/SearchContext';
+import SearchMetaContext from '../../src/frontend/contexts/SearchMetaContext';
 
 const DynamicReactJson = dynamic(import('react-json-view'), { ssr: false });
 
