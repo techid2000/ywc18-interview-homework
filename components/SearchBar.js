@@ -2,6 +2,8 @@ import { AutoComplete, Button, Input, Select } from 'antd';
 import { SearchOutlined, FilterOutlined } from '@ant-design/icons';
 
 import './SearchBar.scss';
+import { useContext } from 'react';
+import SearchMetaContext from '../contexts/SearchMetaContext';
 
 const { Option } = Input;
 
@@ -12,21 +14,17 @@ const mockMerchantTypes = [
   { label: 'ร้านสินค้าทั่วไป', value: 'ร้านสินค้าทั่วไป' },
 ];
 
-const mockLocations = [
-  { label: 'พื้นที่ใกล้ฉัน', value: 'nearby' },
-  { label: 'สถานที่ทั้งหมด', value: 'all' },
-  { label: 'กรุงเทพมหานคร', value: 'bangkok' },
-  { label: 'ระยอง', value: 'rayong' },
-];
-
 const SearchBar = ({ setDrawerVisible }) => {
+  const searchMeta = useContext(SearchMetaContext);
   return (
     <div className="flex items-center w-full">
       <div className="flex items-center border border-gray-400 shadow-sm rounded-lg w-full h-10 overflow-hidden">
         <Select
-          defaultValue="nearby"
           bordered={false}
-          options={mockLocations}
+          options={searchMeta.provinces.map((province) => ({
+            label: province,
+            value: province,
+          }))}
           className="flex-grow-0 flex-shrink-0 w-48 hidden md:block"
         />
         <div className="flex border-l h-full w-full items-center">
