@@ -1,23 +1,19 @@
 const { Tag, Divider } = require('antd');
 
-const SearchResultMerchantCard = () => {
-  const shopNameTH = 'ชื่อร้าน';
-  const categoryName = 'ร้านอาหาร';
-  const subcategory = 'ประเภทอาหาร 1 / ประเภทอาหาร 2';
-  const coverImageURL =
-    'https://images.unsplash.com/photo-1496412705862-e0088f16f791?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80';
-  const facilities = [
-    'ที่จอดรถ',
-    'รับจองล่วงหน้า',
-    'สามารถนำสัตว์เลี้ยงเข้าได้',
-  ];
-  const priceLevel = 2;
-  const isOpen = 'Y';
-  const highlightHTML =
-    '<strong>ร้านกาแฟสด</strong> ดริปเองโดยบาริสต้าชื่อดังระดับประเทศ';
-  const recommendedItems = ['สินค้าแนะนำ1', 'สินค้าแนะนำ2'];
-  const addressProvinceName = 'กรุงเทพมหานคร';
-  const addressDistinctName = 'เขตปทุมวัน';
+const SearchResultMerchantCard = ({ merchant }) => {
+  const {
+    shopNameTH,
+    categoryName,
+    subcategory,
+    coverImageId,
+    facilities,
+    priceLevel,
+    isOpen,
+    highlightText,
+    recommendedItems,
+    addressProvinceName,
+    addressDistrictName,
+  } = merchant;
 
   const getIsOpenViewMeta = (isOpen) => {
     if (isOpen === 'Y') {
@@ -89,7 +85,7 @@ const SearchResultMerchantCard = () => {
       <div className="img flex-shrink-0" />
       <div className="p-4 w-full">
         <div className="flex items-center text-xl font-semibold">
-          ครัวบักเต
+          {shopNameTH}
           {isOpenViewMeta.visible && (
             <Tag color={isOpenViewMeta.tagColor} className="ml-4">
               {isOpenViewMeta.statusText}
@@ -110,13 +106,13 @@ const SearchResultMerchantCard = () => {
             ))}
           </span>
           <span className="mx-3">|</span>
-          <span>{`${addressDistinctName} ${addressProvinceName}`}</span>
+          <span>{`${addressDistrictName} ${addressProvinceName}`}</span>
         </div>
         <div style={{ width: '65%' }}>
           <Divider />
         </div>
         <div
-          dangerouslySetInnerHTML={{ __html: highlightHTML }}
+          dangerouslySetInnerHTML={{ __html: highlightText }}
           className="text-sm font-normal text-gray-500 mb-2"
         />
         <div className="text-sm font-normal text-gray-500 mb-2">
@@ -152,7 +148,7 @@ const SearchResultMerchantCard = () => {
         .img {
           width: 100%;
           height: 224px;
-          background-image: url('${coverImageURL}');
+          background-image: url('${coverImageId}');
           background-size: cover;
           background-repeat: no-repeat;
           background-position: center center;
