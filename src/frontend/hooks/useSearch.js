@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import {
   CATEGORIES,
+  LOCATIONS,
   PRICERANGE,
   SUBCATEGORIES,
 } from '../../constants/searchConstants';
@@ -10,10 +11,10 @@ import SearchContext from '../contexts/SearchContext';
 
 const useSearch = () => {
   const [shopNameTH, setShopNameTH] = useState('');
-  const [categoryName, setCategoryName] = useState('');
-  const [addressProvinceName, setAddressProvinceName] = useState('');
-  const [priceLevel, setPriceLevel] = useState('');
-  const [subcategoryName, setSubcategoryName] = useState('');
+  const [categoryName, setCategoryName] = useState(CATEGORIES.ALL);
+  const [addressProvinceName, setAddressProvinceName] = useState(LOCATIONS.ALL);
+  const [priceLevel, setPriceLevel] = useState(PRICERANGE.ALL);
+  const [subcategoryName, setSubcategoryName] = useState(SUBCATEGORIES.ALL);
 
   const [loading, setLoading] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
@@ -42,6 +43,10 @@ const useSearch = () => {
   useEffect(() => {
     performSearch(false);
   }, [categoryName, addressProvinceName, priceLevel, subcategoryName]);
+
+  useEffect(() => {
+    performSearch(false);
+  }, []);
 
   return {
     shopNameTH,
