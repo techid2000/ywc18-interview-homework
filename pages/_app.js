@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import '../src/frontend/scss/_app.scss';
+
 import '../src/frontend/less/antd.less';
 import '../src/frontend/scss/tailwind-build.scss';
 

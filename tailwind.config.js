@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin');
+
 module.exports = {
   future: {
     // removeDeprecatedGapUtilities: true,
@@ -261,6 +263,7 @@ module.exports = {
     },
     fontFamily: {
       sans: [
+        'ibm-plex-thai',
         'system-ui',
         '-apple-system',
         'BlinkMacSystemFont',
@@ -274,7 +277,7 @@ module.exports = {
         '"Segoe UI Emoji"',
         '"Segoe UI Symbol"',
         '"Noto Color Emoji"',
-      ],
+      ].join(', '),
       serif: ['Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
       mono: [
         'Menlo',
@@ -836,5 +839,11 @@ module.exports = {
     animation: ['responsive'],
   },
   corePlugins: {},
-  plugins: [],
+  plugins: [
+    plugin(function ({ addBase, config }) {
+      addBase({
+        body: { fontFamily: config('theme.fontFamily.sans') },
+      });
+    }),
+  ],
 };
