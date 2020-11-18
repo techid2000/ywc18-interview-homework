@@ -1,6 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
+import {
+  CATEGORIES,
+  PRICERANGE,
+  SUBCATEGORIES,
+} from '../../constants/searchConstants';
 
-import { getSearchResult } from '../api/search';
+import { getSearchResult } from '../api/searchAPI';
 import SearchContext from '../contexts/SearchContext';
 
 const useSearch = () => {
@@ -13,8 +18,15 @@ const useSearch = () => {
   const [loading, setLoading] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
 
-  const performSearch = async () => {
+  const performSearch = async (resetCriteria = true) => {
     setLoading(true);
+
+    if (resetCriteria) {
+      setCategoryName(CATEGORIES.ALL);
+      setPriceLevel(PRICERANGE.ALL);
+      setSubcategoryName(SUBCATEGORIES.ALL);
+    }
+
     setSearchResult(
       await getSearchResult({
         shopNameTH,
@@ -28,7 +40,7 @@ const useSearch = () => {
   };
 
   useEffect(() => {
-    performSearch();
+    performSearch(false);
   }, [categoryName, addressProvinceName, priceLevel, subcategoryName]);
 
   return {
