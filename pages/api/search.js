@@ -27,6 +27,12 @@ const handler = async (req, res) => {
       );
     }
 
+    if (body.priceLevel) {
+      merchants = merchants.filter((merchant) =>
+        isEqual(merchant.priceLevel, body.priceLevel)
+      );
+    }
+
     if (body.subcategoryName) {
       merchants = merchants.filter((merchant) =>
         isEqual(merchant.subcategoryName, body.subcategoryName)
