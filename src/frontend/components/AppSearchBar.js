@@ -5,8 +5,6 @@ import Image from 'next/image';
 import SearchBar from './SearchBar';
 import SearchFiltersDrawer from './SearchFiltersDrawer';
 
-import './AppSearchBar.scss';
-
 const AppSearchBar = () => {
   const [visible, setVisible] = useState(false);
   return (
