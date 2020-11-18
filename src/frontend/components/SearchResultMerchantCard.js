@@ -92,7 +92,7 @@ const SearchResultMerchantCard = ({ merchant }) => {
             </Tag>
           )}
         </div>
-        <div className="flex flex-wrap text-sm font-normal text-gray-500">
+        <div className="flex flex-wrap text-sm font-normal text-ash-400">
           <span>{subcategory ?? categoryName}</span>
           <span className="mx-3">|</span>
           <span>
@@ -113,9 +113,9 @@ const SearchResultMerchantCard = ({ merchant }) => {
         </div>
         <div
           dangerouslySetInnerHTML={{ __html: highlightText }}
-          className="text-sm font-normal text-gray-500 mb-2"
+          className="text-sm font-normal text-ash-400 mb-2"
         />
-        <div className="text-sm font-normal text-gray-500 mb-2">
+        <div className="text-sm font-normal text-ash-400 mb-2">
           <span className="text-black">{`${recommendedItemsViewMeta.recommendText}: `}</span>
           <span>{recommendedItemsViewMeta.recommendedItems}</span>
         </div>
@@ -126,7 +126,7 @@ const SearchResultMerchantCard = ({ merchant }) => {
               <div
                 key={facility}
                 style={{ padding: '5px' }}
-                className="rounded-full border border-green-500 mr-2"
+                className="rounded-full border border-lime-600 mr-2"
               >
                 <img
                   src={facilityMeta.iconUrl}
