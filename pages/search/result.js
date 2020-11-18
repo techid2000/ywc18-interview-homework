@@ -1,15 +1,15 @@
 import dynamic from 'next/dynamic';
 
+import { Card, Space } from 'antd';
+
 import AppLayout from '../../layouts/AppLayout';
 import SearchFiltersSidebar from '../../components/SearchFiltersSidebar';
 import SearchResultMerchantList from '../../components/SearchResultMerchantList';
 
-import SearchMetaContext from '../../contexts/SearchMetaContext';
-import { useEffect, useState } from 'react';
-import { getSearchMeta, getSearchResult } from '../../api/search';
-import { Card, Space } from 'antd';
 import useSearch from '../../hooks/useSearch';
+import { getSearchMeta } from '../../src/frontend/api/searchAPI';
 import SearchContext from '../../contexts/SearchContext';
+import SearchMetaContext from '../../contexts/SearchMetaContext';
 
 const DynamicReactJson = dynamic(import('react-json-view'), { ssr: false });
 
