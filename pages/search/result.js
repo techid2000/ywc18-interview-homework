@@ -8,7 +8,7 @@ const SearchResultPage = () => {
       <div className="text-xl font-semibold">
         ผลการค้นหา ร้านค้า OTOP ทั้งหมด
       </div>
-      <div className="flex mt-12">
+      <div className="flex mt-12 items-start">
         <SearchFiltersSidebar />
         <SearchResultMerchantList />
       </div>
