@@ -1,3 +1,9 @@
+import {
+  CATEGORIES,
+  LOCATIONS,
+  PRICERANGE,
+  SUBCATEGORIES,
+} from '../../constants/searchConstants';
 import { useSearchController } from '../hooks/useSearch';
 import useSearchMeta from '../hooks/useSearchMeta';
 
@@ -25,13 +31,14 @@ const SearchFilters = () => {
       <span className="text-base font-semibold">ประเภทร้านค้า</span>
       <Radio.Group
         onChange={({ target: { value } }) => {
+          setSubcategoryName(SUBCATEGORIES.ALL);
           setCategoryName(value);
         }}
         value={categoryName}
         className="flex flex-col mt-4"
       >
-        <Radio value={'ทั้งหมด'} style={{ lineHeight: '30px' }}>
-          ทั้งหมด
+        <Radio value={CATEGORIES.ALL} style={{ lineHeight: '30px' }}>
+          {CATEGORIES.ALL}
         </Radio>
         {searchMeta.categories.map((category) => (
           <Radio
@@ -47,9 +54,13 @@ const SearchFilters = () => {
       <span className="text-base font-semibold mt-8">จังหวัด/ใกล้ฉัน</span>
       <Select
         className="mt-2"
-        options={searchMeta.provinces.map((province) => ({
-          label: province,
-          value: province,
+        options={[
+          LOCATIONS.NEAR_ME,
+          LOCATIONS.ALL,
+          ...searchMeta.provinces,
+        ].map((location) => ({
+          label: location,
+          value: location,
         }))}
         value={addressProvinceName}
         onChange={(value) => setAddressProvinceName(value)}
@@ -58,10 +69,13 @@ const SearchFilters = () => {
       <span className="text-base font-semibold mt-8">ช่วงราคาสินค้า (บาท)</span>
       <Select
         className="mt-2"
-        options={searchMeta.priceRange.map((range, index) => ({
-          label: range,
-          value: index + 1,
-        }))}
+        options={[
+          { label: PRICERANGE.ALL, value: PRICERANGE.ALL },
+          ...searchMeta.priceRange.map((range, index) => ({
+            label: range,
+            value: index + 1,
+          })),
+        ]}
         value={priceLevel}
         onChange={(value) => setPriceLevel(value)}
       />
@@ -73,15 +87,17 @@ const SearchFilters = () => {
             value={subcategoryName}
             onChange={({ target: { value } }) => setSubcategoryName(value)}
           >
-            {selectedSubcategories.map((subcategory) => (
-              <Radio
-                key={subcategory}
-                value={subcategory}
-                style={{ lineHeight: '30px' }}
-              >
-                {subcategory}
-              </Radio>
-            ))}
+            {[SUBCATEGORIES.ALL, ...selectedSubcategories].map(
+              (subcategory) => (
+                <Radio
+                  key={subcategory}
+                  value={subcategory}
+                  style={{ lineHeight: '30px' }}
+                >
+                  {subcategory}
+                </Radio>
+              )
+            )}
           </Radio.Group>
         </>
       )}
