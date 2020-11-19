@@ -81,7 +81,7 @@ const SearchResultMerchantCard = ({ merchant }) => {
   );
 
   return (
-    <div className="lg:flex items-stretch border shadow-sm">
+    <div className="lg:flex items-stretch border shadow-sm bg-white">
       <div className="img-holder">
         <div className="img h-full flex-shrink-0" />
       </div>

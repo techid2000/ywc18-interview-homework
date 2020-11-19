@@ -7,7 +7,11 @@ const AppBreadcrumb = () => {
         className="flex w-full items-center px-0 md:px-10 pl-4 py-3"
         style={{ maxWidth: '1280px' }}
       >
-        <span className="text-white">หน้าแรก / ค้นหา ไอสัส</span>
+        <span className="text-white">
+          <span>หน้าแรก</span>
+          <span className="mx-2">/</span>
+          <strong>ค้นหา</strong>
+        </span>
       </div>
     </div>
   );

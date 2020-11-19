@@ -9,7 +9,7 @@ const AppSearchBar = () => {
   const [visible, setVisible] = useState(false);
   return (
     <>
-      <div className="flex w-full h-16 justify-center items-center">
+      <div className="flex w-full h-16 justify-center items-center bg-white">
         <div
           className="flex w-full h-full items-center px-0 md:px-10 pl-4"
           style={{ maxWidth: '1280px' }}
