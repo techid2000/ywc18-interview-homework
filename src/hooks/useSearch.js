@@ -54,7 +54,7 @@ const useSearch = (allSearchResult) => {
     router.replace(getSearchReplaceURL(criteria));
 
     setSearchResult(
-      getFilteredSearchResult(await getAllSearch().allSearchResult, criteria)
+      getFilteredSearchResult((await getAllSearch()).allSearchResult, criteria)
     );
 
     // await new Promise((resolve) => setTimeout(() => resolve(), 1000));
