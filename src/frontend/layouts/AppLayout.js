@@ -2,7 +2,15 @@ import AppHeader from '../components/AppHeader';
 
 const AppLayout = ({ children }) => {
   return (
-    <>
+    <div
+      style={{
+        minHeight: '100vh',
+        backgroundImage: `url('/bg.png')`,
+        backgroundPosition: 'center center',
+        backgroundSize: 'cover',
+        backgroundAttachment: 'fixed',
+      }}
+    >
       <AppHeader />
       <div
         className="px-4 py-8 md:py-4 w-full mx-auto"
@@ -10,7 +18,7 @@ const AppLayout = ({ children }) => {
       >
         {children}
       </div>
-    </>
+    </div>
   );
 };
 
