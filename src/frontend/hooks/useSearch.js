@@ -1,3 +1,6 @@
+import { isEmpty } from 'lodash';
+import { useRouter } from 'next/router';
+
 import { useContext, useEffect, useState } from 'react';
 import {
   CATEGORIES,
@@ -10,11 +13,22 @@ import { getSearchResult } from '../api/searchAPI';
 import SearchContext from '../contexts/SearchContext';
 
 const useSearch = () => {
-  const [shopNameTH, setShopNameTH] = useState('');
-  const [categoryName, setCategoryName] = useState(CATEGORIES.ALL);
-  const [addressProvinceName, setAddressProvinceName] = useState(LOCATIONS.ALL);
-  const [priceLevel, setPriceLevel] = useState(PRICERANGE.ALL);
-  const [subcategoryName, setSubcategoryName] = useState(SUBCATEGORIES.ALL);
+  const router = useRouter();
+  const { query } = router;
+
+  const [shopNameTH, setShopNameTH] = useState(query.searchQuery ?? '');
+  const [categoryName, setCategoryName] = useState(
+    query.category ?? CATEGORIES.ALL
+  );
+  const [addressProvinceName, setAddressProvinceName] = useState(
+    query.province ?? LOCATIONS.ALL
+  );
+  const [priceLevel, setPriceLevel] = useState(
+    query.priceLevel ?? PRICERANGE.ALL
+  );
+  const [subcategoryName, setSubcategoryName] = useState(
+    query.subcategory ?? SUBCATEGORIES.ALL
+  );
 
   const [loading, setLoading] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
@@ -27,6 +41,19 @@ const useSearch = () => {
       setPriceLevel(PRICERANGE.ALL);
       setSubcategoryName(SUBCATEGORIES.ALL);
     }
+
+    let url = '/search/result';
+    url += `?searchQuery=${encodeURIComponent(
+      shopNameTH
+    )}&category=${encodeURIComponent(
+      categoryName
+    )}&province=${encodeURIComponent(
+      addressProvinceName
+    )}&priceLevel=${encodeURIComponent(
+      priceLevel
+    )}&subcategory=${encodeURIComponent(subcategoryName)}`;
+
+    router.replace(url);
 
     setSearchResult(
       await getSearchResult({
@@ -62,6 +89,7 @@ const useSearch = () => {
     performSearch,
     searchResult,
     loading,
+    searchQuery: query.searchQuery,
   };
 };
 
