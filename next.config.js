@@ -8,6 +8,7 @@ module.exports = withImages(
   withSass(
     withLess({
       assetPrefix: prod ? '/ywc18-interview-homework' : '',
+      basePath: prod ? '/ywc18-interview-homework' : '',
       lessLoaderOptions: {
         javascriptEnabled: true,
       },
