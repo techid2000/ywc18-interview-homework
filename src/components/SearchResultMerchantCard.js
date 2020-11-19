@@ -1,3 +1,9 @@
+import {
+  getIsOpenViewMeta,
+  getFacilityViewMeta,
+  getRecommendedItemsViewMeta,
+} from '../utils/searchViewUtils';
+
 const { Tag, Divider } = require('antd');
 
 const SearchResultMerchantCard = ({ merchant }) => {
@@ -14,65 +20,6 @@ const SearchResultMerchantCard = ({ merchant }) => {
     addressProvinceName,
     addressDistrictName,
   } = merchant;
-
-  const getIsOpenViewMeta = (isOpen) => {
-    if (isOpen === 'Y') {
-      return {
-        statusText: 'เปิดอยู่',
-        tagColor: '#1BC300',
-        visible: true,
-      };
-    }
-    if (isOpen === 'N') {
-      return {
-        statusText: 'ปิดแล้ว',
-        tagColor: '#A1A1A1',
-        visible: true,
-      };
-    }
-    // N/A
-    return {
-      visible: false,
-    };
-  };
-
-  const getFacilityViewMeta = (facility) => {
-    if (facility === 'ที่จอดรถ') {
-      return { visible: true, iconUrl: '/car-park.png' };
-    }
-    if (facility === 'สามารถนำสัตว์เลี้ยงเข้าได้') {
-      return { visible: true, iconUrl: '/allow-pet.png' };
-    }
-    if (facility === 'รับจองล่วงหน้า') {
-      return { visible: true, iconUrl: '/allow-book.png' };
-    }
-    return {
-      visible: false,
-    };
-  };
-
-  const getRecommendedItemsViewMeta = (categoryName, recommendedItems) => {
-    const viewMeta = {
-      recommendText: '',
-      recommendedItems: '',
-    };
-
-    if (categoryName === 'ร้านอาหาร') {
-      viewMeta.recommendText = 'เมนูแนะนำ';
-    } else {
-      viewMeta.recommendText = 'สินค้าแนะนำ';
-    }
-
-    for (const [index, item] of recommendedItems.entries()) {
-      if (index === 0) {
-        viewMeta.recommendedItems += item;
-      } else {
-        viewMeta.recommendedItems += `, ${item}`;
-      }
-    }
-
-    return viewMeta;
-  };
 
   const isOpenViewMeta = getIsOpenViewMeta(isOpen);
   const recommendedItemsViewMeta = getRecommendedItemsViewMeta(
@@ -123,7 +70,7 @@ const SearchResultMerchantCard = ({ merchant }) => {
         </div>
         <div className="flex items-center mt-4">
           {facilities.map((facility) => {
-            const facilityMeta = getFacilityViewMeta(facility);
+            const facilityViewMeta = getFacilityViewMeta(facility);
             return (
               <div
                 key={facility}
@@ -131,7 +78,7 @@ const SearchResultMerchantCard = ({ merchant }) => {
                 className="rounded-full border border-lime-600 mr-2"
               >
                 <img
-                  src={facilityMeta.iconUrl}
+                  src={facilityViewMeta.iconUrl}
                   style={{ width: '18px', height: '18px' }}
                 />
               </div>

@@ -1,18 +1,19 @@
-import { isEmpty } from 'lodash';
 import { useRouter } from 'next/router';
-
 import { useContext, useEffect, useState } from 'react';
+
+import SearchContext from '../contexts/SearchContext';
+
+import { getFilteredSearchResult } from '../utils/searchUtils';
+import { getSearchReplaceURL } from '../utils/routerUtils';
+
 import {
   CATEGORIES,
   LOCATIONS,
   PRICERANGE,
   SUBCATEGORIES,
-} from '../../constants/searchConstants';
+} from '../constants/searchConstants';
 
-import { getSearchResult } from '../api/searchAPI';
-import SearchContext from '../contexts/SearchContext';
-
-const useSearch = () => {
+const useSearch = (allSearchResult) => {
   const router = useRouter();
   const { query } = router;
 
@@ -29,11 +30,18 @@ const useSearch = () => {
   const [subcategoryName, setSubcategoryName] = useState(
     query.subcategory ?? SUBCATEGORIES.ALL
   );
-
   const [loading, setLoading] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
 
   const performSearch = async (resetCriteria = true) => {
+    const criteria = {
+      shopNameTH,
+      categoryName,
+      addressProvinceName,
+      priceLevel,
+      subcategoryName,
+    };
+
     setLoading(true);
 
     if (resetCriteria) {
@@ -42,28 +50,12 @@ const useSearch = () => {
       setSubcategoryName(SUBCATEGORIES.ALL);
     }
 
-    let url = '/search/result';
-    url += `?searchQuery=${encodeURIComponent(
-      shopNameTH
-    )}&category=${encodeURIComponent(
-      categoryName
-    )}&province=${encodeURIComponent(
-      addressProvinceName
-    )}&priceLevel=${encodeURIComponent(
-      priceLevel
-    )}&subcategory=${encodeURIComponent(subcategoryName)}`;
+    router.replace(getSearchReplaceURL(criteria));
 
-    router.replace(url);
+    setSearchResult(getFilteredSearchResult(allSearchResult, criteria));
 
-    setSearchResult(
-      await getSearchResult({
-        shopNameTH,
-        categoryName,
-        addressProvinceName,
-        priceLevel,
-        subcategoryName,
-      })
-    );
+    await new Promise((resolve) => setTimeout(() => resolve(), 1000));
+
     setLoading(false);
   };
 

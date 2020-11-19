@@ -6,7 +6,7 @@ import './SearchBar.scss';
 import useSearchMeta from '../hooks/useSearchMeta';
 import { useSearchController } from '../hooks/useSearch';
 
-import { LOCATIONS } from '../../constants/searchConstants';
+import { LOCATIONS } from '../constants/searchConstants';
 
 const SearchBar = ({ setDrawerVisible }) => {
   const searchMeta = useSearchMeta();

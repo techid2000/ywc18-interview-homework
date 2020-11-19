@@ -3,7 +3,7 @@ import {
   LOCATIONS,
   PRICERANGE,
   SUBCATEGORIES,
-} from '../../constants/searchConstants';
+} from '../constants/searchConstants';
 import { useSearchController } from '../hooks/useSearch';
 import useSearchMeta from '../hooks/useSearchMeta';
 

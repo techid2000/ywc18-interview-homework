@@ -25,3 +25,9 @@ export const WORD = {
   OTOP: 'OTOP',
   THONGFAH: 'ธงฟ้า',
 };
+
+export const FACILITIES = {
+  CAR_PARK: 'ที่จอดรถ',
+  ALLOW_PET: 'สามารถนำสัตว์เลี้ยงเข้าได้',
+  ALLOW_BOOK: 'รับจองล่วงหน้า',
+};
