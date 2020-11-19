@@ -81,9 +81,11 @@ const SearchResultMerchantCard = ({ merchant }) => {
   );
 
   return (
-    <div className="lg:flex border img-holder">
-      <div className="img flex-shrink-0" />
-      <div className="p-4 w-full">
+    <div className="lg:flex items-stretch border shadow-sm">
+      <div className="img-holder">
+        <div className="img h-full flex-shrink-0" />
+      </div>
+      <div className="p-4 w-full break-all">
         <div className="flex items-center text-xl font-semibold">
           {shopNameTH}
           {isOpenViewMeta.visible && (
@@ -119,7 +121,7 @@ const SearchResultMerchantCard = ({ merchant }) => {
           <span className="text-black">{`${recommendedItemsViewMeta.recommendText}: `}</span>
           <span>{recommendedItemsViewMeta.recommendedItems}</span>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center mt-4">
           {facilities.map((facility) => {
             const facilityMeta = getFacilityViewMeta(facility);
             return (
@@ -147,7 +149,7 @@ const SearchResultMerchantCard = ({ merchant }) => {
 
         .img {
           width: 100%;
-          height: 224px;
+          min-height: 225px;
           background-image: url('${coverImageId}');
           background-size: cover;
           background-repeat: no-repeat;
