@@ -22,10 +22,6 @@ const SearchFilters = () => {
     setSubcategoryName,
   } = useSearchController();
 
-  const selectedSubcategories = searchMeta.categories.find(
-    (category) => category.name === categoryName
-  )?.subcategories;
-
   return (
     <div className="flex flex-col">
       <span className="text-base font-semibold">ประเภทร้านค้า</span>
@@ -79,25 +75,30 @@ const SearchFilters = () => {
         value={priceLevel}
         onChange={(value) => setPriceLevel(value)}
       />
-      {selectedSubcategories?.length > 0 && (
+      {categoryName !== CATEGORIES.ALL && (
         <>
-          <span className="text-base font-semibold mt-8">ประเภทร้าน...</span>
+          <span className="text-base font-semibold mt-8">
+            ประเภท{categoryName}
+          </span>
           <Radio.Group
             className="flex flex-col mt-4"
             value={subcategoryName}
             onChange={({ target: { value } }) => setSubcategoryName(value)}
           >
-            {[SUBCATEGORIES.ALL, ...selectedSubcategories].map(
-              (subcategory) => (
-                <Radio
-                  key={subcategory}
-                  value={subcategory}
-                  style={{ lineHeight: '30px' }}
-                >
-                  {subcategory}
-                </Radio>
-              )
-            )}
+            {[
+              SUBCATEGORIES.ALL,
+              ...searchMeta.categories.find(
+                (category) => category.name === categoryName
+              )?.subcategories,
+            ].map((subcategory) => (
+              <Radio
+                key={subcategory}
+                value={subcategory}
+                style={{ lineHeight: '30px' }}
+              >
+                {subcategory}
+              </Radio>
+            ))}
           </Radio.Group>
         </>
       )}
