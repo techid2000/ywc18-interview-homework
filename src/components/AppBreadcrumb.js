@@ -6,7 +6,7 @@ const AppBreadcrumb = () => {
         style={{ maxWidth: '1280px' }}
       >
         <span className="text-white">
-          <span>หน้าแรก</span>
+          <span className="underline">หน้าแรก</span>
           <span className="mx-2">/</span>
           <strong>ค้นหา</strong>
         </span>

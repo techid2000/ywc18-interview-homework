@@ -9,13 +9,13 @@ export const getSearchReplaceURL = (criteria) => {
 
   let url = '/search/result';
 
-  url += `?searchQuery=${encodeURIComponent(
-    shopNameTH
-  )}&category=${encodeURIComponent(categoryName)}&province=${encodeURIComponent(
-    addressProvinceName
-  )}&priceLevel=${encodeURIComponent(
+  url += `?searchQuery=${encodeURI(shopNameTH)}&category=${encodeURI(
+    categoryName
+  )}&province=${encodeURI(addressProvinceName)}&priceLevel=${encodeURI(
     priceLevel
-  )}&subcategory=${encodeURIComponent(subcategoryName)}`;
+  )}&subcategory=${encodeURI(subcategoryName)}`;
+
+  console.log(url);
 
   return url;
 };

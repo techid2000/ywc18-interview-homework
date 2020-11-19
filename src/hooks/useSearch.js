@@ -22,7 +22,7 @@ const useSearch = (allSearchResult) => {
     query.category ?? CATEGORIES.ALL
   );
   const [addressProvinceName, setAddressProvinceName] = useState(
-    query.province ?? LOCATIONS.ALL
+    query.province ?? LOCATIONS.NEAR_ME
   );
   const [priceLevel, setPriceLevel] = useState(
     query.priceLevel ?? PRICERANGE.ALL
@@ -54,7 +54,7 @@ const useSearch = (allSearchResult) => {
 
     setSearchResult(getFilteredSearchResult(allSearchResult, criteria));
 
-    // await new Promise((resolve) => setTimeout(() => resolve(), 1000));
+    await new Promise((resolve) => setTimeout(() => resolve(), 500));
 
     setLoading(false);
   };

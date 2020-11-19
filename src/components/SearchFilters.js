@@ -7,6 +7,8 @@ import {
 import { useSearchController } from '../hooks/useSearch';
 import useSearchMeta from '../hooks/useSearchMeta';
 
+import { MdLocationOn } from 'react-icons/md';
+
 const { Radio, Select } = require('antd');
 
 const SearchFilters = () => {
@@ -51,13 +53,20 @@ const SearchFilters = () => {
       <Select
         className="mt-2"
         options={[
-          LOCATIONS.NEAR_ME,
-          LOCATIONS.ALL,
-          ...searchMeta.provinces,
-        ].map((location) => ({
-          label: location,
-          value: location,
-        }))}
+          {
+            label: (
+              <span className="flex items-center">
+                <MdLocationOn className="w-6 h-6 mr-2" />
+                {LOCATIONS.NEAR_ME}
+              </span>
+            ),
+            value: LOCATIONS.NEAR_ME,
+          },
+          ...searchMeta.provinces.map((location) => ({
+            label: location,
+            value: location,
+          })),
+        ]}
         value={addressProvinceName}
         onChange={(value) => setAddressProvinceName(value)}
       />

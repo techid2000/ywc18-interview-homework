@@ -7,6 +7,7 @@ import useSearchMeta from '../hooks/useSearchMeta';
 import { useSearchController } from '../hooks/useSearch';
 
 import { LOCATIONS } from '../constants/searchConstants';
+import { MdLocationOn } from 'react-icons/md';
 
 const SearchBar = ({ setDrawerVisible }) => {
   const searchMeta = useSearchMeta();
@@ -26,18 +27,25 @@ const SearchBar = ({ setDrawerVisible }) => {
         <Select
           bordered={false}
           options={[
-            LOCATIONS.NEAR_ME,
-            LOCATIONS.ALL,
-            ...searchMeta.provinces,
-          ].map((location) => ({
-            label: location,
-            value: location,
-          }))}
+            {
+              label: (
+                <span className="flex items-center">
+                  <MdLocationOn className="w-6 h-6 mr-2" />
+                  {LOCATIONS.NEAR_ME}
+                </span>
+              ),
+              value: LOCATIONS.NEAR_ME,
+            },
+            ...searchMeta.provinces.map((location) => ({
+              label: location,
+              value: location,
+            })),
+          ]}
           value={addressProvinceName}
           onChange={(value) => setAddressProvinceName(value)}
           className="flex-grow-0 flex-shrink-0 w-48 hidden md:block"
         />
-        <div className="flex border-l h-full w-full items-center">
+        <div className="fix flex border-l h-full w-full items-center">
           <AutoComplete
             options={searchMeta.categories.map((category) => ({
               label: category.name,
