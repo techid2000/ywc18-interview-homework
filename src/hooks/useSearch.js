@@ -12,8 +12,9 @@ import {
   PRICERANGE,
   SUBCATEGORIES,
 } from '../constants/searchConstants';
+import { getAllSearch } from '../api/searchAPI';
 
-const useSearch = (allSearchResult) => {
+const useSearch = () => {
   const router = useRouter();
   const { query } = router;
 
@@ -52,9 +53,11 @@ const useSearch = (allSearchResult) => {
 
     router.replace(getSearchReplaceURL(criteria));
 
-    setSearchResult(getFilteredSearchResult(allSearchResult, criteria));
+    setSearchResult(
+      getFilteredSearchResult((await getAllSearch()).allSearchResult, criteria)
+    );
 
-    await new Promise((resolve) => setTimeout(() => resolve(), 500));
+    // await new Promise((resolve) => setTimeout(() => resolve(), 500));
 
     setLoading(false);
   };

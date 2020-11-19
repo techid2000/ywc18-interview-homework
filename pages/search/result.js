@@ -15,8 +15,8 @@ import { getSearchResultTitle } from '../../src/utils/searchViewUtils';
 
 const DynamicReactJson = dynamic(import('react-json-view'), { ssr: false });
 
-const SearchResultPage = ({ searchMeta, allSearchResult }) => {
-  const searchController = useSearch(allSearchResult);
+const SearchResultPage = ({ searchMeta }) => {
+  const searchController = useSearch();
   const { categoryName, searchQuery, searchResult } = searchController;
 
   return (
@@ -47,8 +47,8 @@ const SearchResultPage = ({ searchMeta, allSearchResult }) => {
 };
 
 export async function getStaticProps(context) {
-  const { searchMeta, allSearchResult } = await getAllSearch();
-  return { props: { searchMeta, allSearchResult } };
+  const { searchMeta } = await getAllSearch();
+  return { props: { searchMeta } };
 }
 
 export default SearchResultPage;

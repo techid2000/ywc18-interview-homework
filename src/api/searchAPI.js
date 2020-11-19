@@ -3,7 +3,7 @@ import { omit } from 'lodash';
 
 export const getAllSearch = async () => {
   try {
-    const raw = await axios.get(process.env.API_PATH_YWC);
+    const raw = await axios.get('https://panjs.com/ywc18.json');
 
     let searchMeta = omit(raw.data, ['merchants']);
 
