@@ -1,6 +1,6 @@
 @import url(https://use.typekit.net/tdz8kns.css);
 
-.test .ant-select:not(.ant-select-disabled):hover .ant-select-selector{
+.fix .ant-select:not(.ant-select-disabled):hover .ant-select-selector{
   border-color:none;
   border-right-width:0px !important
 }
