@@ -37,13 +37,22 @@ export const getIsOpenViewMeta = (isOpen) => {
 
 export const getFacilityViewMeta = (facility) => {
   if (facility === FACILITIES.CAR_PARK) {
-    return { visible: true, iconUrl: '/car-park.png' };
+    return {
+      visible: true,
+      iconUrl: `${process.env.NEXT_PUBLIC_BASE_PATH}/car-park.png`,
+    };
   }
   if (facility === FACILITIES.ALLOW_PET) {
-    return { visible: true, iconUrl: '/allow-pet.png' };
+    return {
+      visible: true,
+      iconUrl: `${process.env.NEXT_PUBLIC_BASE_PATH}/allow-pet.png`,
+    };
   }
   if (facility === FACILITIES.ALLOW_BOOK) {
-    return { visible: true, iconUrl: '/allow-book.png' };
+    return {
+      visible: true,
+      iconUrl: `${process.env.NEXT_PUBLIC_BASE_PATH}/allow-book.png`,
+    };
   }
   return {
     visible: false,
