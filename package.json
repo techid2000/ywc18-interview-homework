@@ -5,8 +5,9 @@
   "scripts": {
     "dev": "npm run build:css && next dev",
     "build": "npm run build:css && next build",
+    "build:static": "next build && next export",
     "start": "next start",
-    "build:css": "postcss src/frontend/scss/tailwind.scss -o src/frontend/scss/tailwind-build.scss"
+    "build:css": "postcss src/scss/tailwind.scss -o srcscss/tailwind-build.scss"
   },
   "dependencies": {
     "@ant-design/icons": "^4.3.0",
@@ -17,6 +18,7 @@
     "less": "^3.12.2",
     "lodash": "^4.17.20",
     "next": "10.0.1",
+    "next-images": "^1.6.2",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-json-view": "^1.19.1",

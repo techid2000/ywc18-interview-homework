@@ -5,7 +5,7 @@ import {
   PRICERANGE,
   SUBCATEGORIES,
   WORD,
-} from '../../constants/searchConstants';
+} from '../constants/searchConstants';
 
 // #region filterByShopNameTH
 export const filterByShopNameTH = (merchants, shopNameTH) => {

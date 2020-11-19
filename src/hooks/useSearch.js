@@ -1,18 +1,26 @@
-import { isEmpty } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 import { useRouter } from 'next/router';
+import { resolveConfig } from 'prettier';
 
 import { useContext, useEffect, useState } from 'react';
+import {
+  filterByAddressProvinceName,
+  filterByCategoryName,
+  filterByPriceLevel,
+  filterByShopNameTH,
+  filterBySubcategoryName,
+} from '../utils/searchUtils';
 import {
   CATEGORIES,
   LOCATIONS,
   PRICERANGE,
   SUBCATEGORIES,
-} from '../../constants/searchConstants';
+} from '../constants/searchConstants';
 
 import { getSearchResult } from '../api/searchAPI';
 import SearchContext from '../contexts/SearchContext';
 
-const useSearch = () => {
+const useSearch = (allSearchResult) => {
   const router = useRouter();
   const { query } = router;
 
@@ -55,15 +63,27 @@ const useSearch = () => {
 
     router.replace(url);
 
-    setSearchResult(
-      await getSearchResult({
-        shopNameTH,
-        categoryName,
-        addressProvinceName,
-        priceLevel,
-        subcategoryName,
-      })
-    );
+    // setSearchResult(
+    //   await getSearchResult({
+    //     shopNameTH,
+    //     categoryName,
+    //     addressProvinceName,
+    //     priceLevel,
+    //     subcategoryName,
+    //   })
+    // );
+    let merchants = cloneDeep(allSearchResult);
+
+    merchants = filterByShopNameTH(merchants, shopNameTH);
+    merchants = filterByCategoryName(merchants, categoryName);
+    merchants = filterByAddressProvinceName(merchants, addressProvinceName);
+    merchants = filterByPriceLevel(merchants, priceLevel);
+    merchants = filterBySubcategoryName(merchants, subcategoryName);
+
+    setSearchResult(merchants);
+
+    await new Promise((resolve) => setTimeout(() => resolve(), 1000));
+
     setLoading(false);
   };
 

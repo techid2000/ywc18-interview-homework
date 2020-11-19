@@ -2,34 +2,21 @@ import dynamic from 'next/dynamic';
 
 import { Card, Space } from 'antd';
 
-import AppLayout from '../../src/frontend/layouts/AppLayout';
-import SearchFiltersSidebar from '../../src/frontend/components/SearchFiltersSidebar';
-import SearchResultMerchantList from '../../src/frontend/components/SearchResultMerchantList';
+import AppLayout from '../../src/layouts/AppLayout';
+import SearchFiltersSidebar from '../../src/components/SearchFiltersSidebar';
+import SearchResultMerchantList from '../../src/components/SearchResultMerchantList';
 
-import useSearch from '../../src/frontend/hooks/useSearch';
-import { getSearchMeta } from '../../src/frontend/api/searchAPI';
-import SearchContext from '../../src/frontend/contexts/SearchContext';
-import SearchMetaContext from '../../src/frontend/contexts/SearchMetaContext';
-import { CATEGORIES } from '../../src/constants/searchConstants';
-import { isEmpty } from 'lodash';
+import { getAllSearch } from '../../src/api/searchAPI';
+import useSearch from '../../src/hooks/useSearch';
+import SearchContext from '../../src/contexts/SearchContext';
+import SearchMetaContext from '../../src/contexts/SearchMetaContext';
+
+import { getSearchResultTitle } from '../../src/utils/searchViewUtils';
 
 const DynamicReactJson = dynamic(import('react-json-view'), { ssr: false });
 
-const getSearchResultTitle = (categoryName, searchQuery) => {
-  if (categoryName === CATEGORIES.ALL && isEmpty(searchQuery)) {
-    return 'ผลการค้นหาทั้งหมด';
-  }
-  if (categoryName === CATEGORIES.ALL) {
-    return `ผลการค้นหา ${searchQuery} ทั้งหมด`;
-  }
-  if (isEmpty(searchQuery)) {
-    return `ผลการค้นหา ${categoryName} ทั้งหมด`;
-  }
-  return `ผลการค้นหา ${categoryName}, ${searchQuery} ทั้งหมด`;
-};
-
-const SearchResultPage = ({ searchMeta }) => {
-  const searchController = useSearch();
+const SearchResultPage = ({ searchMeta, allSearchResult }) => {
+  const searchController = useSearch(allSearchResult);
   const { categoryName, searchQuery, searchResult } = searchController;
 
   return (
@@ -59,9 +46,9 @@ const SearchResultPage = ({ searchMeta }) => {
   );
 };
 
-export async function getServerSideProps() {
-  const searchMeta = await getSearchMeta();
-  return { props: { searchMeta } };
+export async function getStaticProps(context) {
+  const { searchMeta, allSearchResult } = await getAllSearch();
+  return { props: { searchMeta, allSearchResult } };
 }
 
 export default SearchResultPage;

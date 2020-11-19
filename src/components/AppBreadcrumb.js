@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 const AppBreadcrumb = () => {
   return (
     <div className="flex w-full justify-center items-center bg-dark-blue-700">

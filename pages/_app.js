@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-import '../src/frontend/scss/_app.scss';
+import '../src/scss/_app.scss';
 
-import '../src/frontend/less/antd.less';
-import '../src/frontend/scss/tailwind-build.scss';
+import '../src/less/antd.less';
+import '../src/scss/tailwind-build.scss';
 
 axios.defaults.baseURL = process.env.API_PATH;
 
