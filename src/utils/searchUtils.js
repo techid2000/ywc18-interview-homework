@@ -1,4 +1,4 @@
-import { isEmpty, isEqual } from 'lodash';
+import { cloneDeep, isEmpty, isEqual } from 'lodash';
 import {
   CATEGORIES,
   LOCATIONS,
@@ -120,3 +120,23 @@ export const filterBySubcategoryName = (merchants, subcategoryName) => {
   ));
 };
 // #endregion
+
+export const getFilteredSearchResult = (allSearchResult, criteria) => {
+  const {
+    shopNameTH,
+    categoryName,
+    addressProvinceName,
+    priceLevel,
+    subcategoryName,
+  } = criteria;
+
+  let filtered = cloneDeep(allSearchResult);
+
+  filtered = filterByShopNameTH(filtered, shopNameTH);
+  filtered = filterByCategoryName(filtered, categoryName);
+  filtered = filterByAddressProvinceName(filtered, addressProvinceName);
+  filtered = filterByPriceLevel(filtered, priceLevel);
+  filtered = filterBySubcategoryName(filtered, subcategoryName);
+
+  return filtered;
+};
