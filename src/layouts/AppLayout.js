@@ -5,7 +5,7 @@ const AppLayout = ({ children }) => {
     <div
       style={{
         minHeight: '100vh',
-        backgroundImage: `url('/bg.png')`,
+        backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH}/bg.png')`,
         backgroundPosition: 'center center',
         backgroundSize: 'cover',
         backgroundAttachment: 'fixed',
