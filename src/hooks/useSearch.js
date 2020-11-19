@@ -12,7 +12,6 @@ import {
   PRICERANGE,
   SUBCATEGORIES,
 } from '../constants/searchConstants';
-import { getAllSearch } from '../api/searchAPI';
 
 const useSearch = (allSearchResult) => {
   const router = useRouter();
@@ -53,9 +52,7 @@ const useSearch = (allSearchResult) => {
 
     router.replace(getSearchReplaceURL(criteria));
 
-    setSearchResult(
-      getFilteredSearchResult((await getAllSearch()).allSearchResult, criteria)
-    );
+    setSearchResult(getFilteredSearchResult(allSearchResult, criteria));
 
     // await new Promise((resolve) => setTimeout(() => resolve(), 1000));
 
