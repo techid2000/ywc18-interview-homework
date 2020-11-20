@@ -46,7 +46,7 @@ const SearchBar = ({ setDrawerVisible }) => {
           className="flex-grow-0 flex-shrink-0 w-48 hidden md:block"
         />
         <div className="fix flex border-l h-full w-full items-center">
-          <AutoComplete
+          {/* <AutoComplete
             options={searchMeta.categories.map((category) => ({
               label: category.name,
               value: category.name,
@@ -57,31 +57,31 @@ const SearchBar = ({ setDrawerVisible }) => {
               setCategoryName(value);
               setShopNameTH('');
             }}
+            bordered={false}
+          > */}
+          <Input
+            placeholder="ค้นหา ชื่อ ร้านอาหาร และเครื่องดื่ม ร้านธงฟ้า ร้านค้า OTOP และสินค้าทั่วไป"
+            suffix={
+              <div
+                className="flex items-center h-full px-6 bg-gray-200"
+                onClick={performSearch}
+              >
+                <SearchOutlined />
+              </div>
+            }
             onChange={(value) => {
               setShopNameTH(value);
             }}
+            onPressEnter={performSearch}
+            style={{
+              height: '2.5rem',
+              paddingTop: 0,
+              paddingBottom: 0,
+              paddingRight: 0,
+            }}
             bordered={false}
-          >
-            <Input
-              placeholder="ค้นหา ชื่อ ร้านอาหาร และเครื่องดื่ม ร้านธงฟ้า ร้านค้า OTOP และสินค้าทั่วไป"
-              suffix={
-                <div
-                  className="flex items-center h-full px-6 bg-gray-200"
-                  onClick={performSearch}
-                >
-                  <SearchOutlined />
-                </div>
-              }
-              onPressEnter={performSearch}
-              style={{
-                height: '2.5rem',
-                paddingTop: 0,
-                paddingBottom: 0,
-                paddingRight: 0,
-              }}
-              bordered={false}
-            />
-          </AutoComplete>
+          />
+          {/* </AutoComplete> */}
         </div>
       </div>
       <Button
