@@ -15,7 +15,5 @@ export const getSearchReplaceURL = (criteria) => {
     priceLevel
   )}&subcategory=${encodeURI(subcategoryName)}`;
 
-  console.log(url);
-
   return url;
 };

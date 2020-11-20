@@ -19,18 +19,12 @@ const useSearch = () => {
   const { query } = router;
 
   const [shopNameTH, setShopNameTH] = useState(query.searchQuery ?? '');
-  const [categoryName, setCategoryName] = useState(
-    query.category ?? CATEGORIES.ALL
-  );
+  const [categoryName, setCategoryName] = useState(CATEGORIES.ALL);
   const [addressProvinceName, setAddressProvinceName] = useState(
-    query.province ?? LOCATIONS.NEAR_ME
+    LOCATIONS.NEAR_ME
   );
-  const [priceLevel, setPriceLevel] = useState(
-    query.priceLevel ?? PRICERANGE.ALL
-  );
-  const [subcategoryName, setSubcategoryName] = useState(
-    query.subcategory ?? SUBCATEGORIES.ALL
-  );
+  const [priceLevel, setPriceLevel] = useState(PRICERANGE.ALL);
+  const [subcategoryName, setSubcategoryName] = useState(SUBCATEGORIES.ALL);
   const [loading, setLoading] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
 
@@ -67,6 +61,12 @@ const useSearch = () => {
   }, [categoryName, addressProvinceName, priceLevel, subcategoryName]);
 
   useEffect(() => {
+    setShopNameTH(query.shopNameTH ?? shopNameTH);
+    setShopNameTH(query.category ?? categoryName);
+    setShopNameTH(query.address ?? addressProvinceName);
+    setShopNameTH(query.priceLevel ?? priceLevel);
+    setShopNameTH(query.subcategory ?? subcategoryName);
+
     performSearch(false);
   }, []);
 
