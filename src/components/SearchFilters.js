@@ -15,13 +15,10 @@ const SearchFilters = () => {
   const searchMeta = useSearchMeta();
   const {
     categoryName,
-    setCategoryName,
     addressProvinceName,
-    setAddressProvinceName,
     priceLevel,
-    setPriceLevel,
     subcategoryName,
-    setSubcategoryName,
+    setCriteria,
   } = useSearchController();
 
   return (
@@ -29,8 +26,11 @@ const SearchFilters = () => {
       <span className="text-base font-semibold">ประเภทร้านค้า</span>
       <Radio.Group
         onChange={({ target: { value } }) => {
-          setSubcategoryName(SUBCATEGORIES.ALL);
-          setCategoryName(value);
+          setCriteria((c) => ({
+            ...c,
+            subcategoryName: SUBCATEGORIES.ALL,
+            categoryName: value,
+          }));
         }}
         value={categoryName}
         className="flex flex-col mt-4"
@@ -68,7 +68,9 @@ const SearchFilters = () => {
           })),
         ]}
         value={addressProvinceName}
-        onChange={(value) => setAddressProvinceName(value)}
+        onChange={(value) =>
+          setCriteria((c) => ({ ...c, addressProvinceName: value }))
+        }
       />
 
       <span className="text-base font-semibold mt-8">ช่วงราคาสินค้า (บาท)</span>
@@ -86,7 +88,7 @@ const SearchFilters = () => {
             ? priceLevel
             : searchMeta.priceRange[parseInt(priceLevel) - 1]
         }
-        onChange={(value) => setPriceLevel(value)}
+        onChange={(value) => setCriteria((c) => ({ ...c, priceLevel: value }))}
       />
       {categoryName !== CATEGORIES.ALL && (
         <>
@@ -96,7 +98,9 @@ const SearchFilters = () => {
           <Radio.Group
             className="flex flex-col mt-4"
             value={subcategoryName}
-            onChange={({ target: { value } }) => setSubcategoryName(value)}
+            onChange={({ target: { value } }) =>
+              setCriteria((c) => ({ ...c, subcategoryName: value }))
+            }
           >
             {[
               SUBCATEGORIES.ALL,

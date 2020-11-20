@@ -14,10 +14,8 @@ const SearchBar = ({ setDrawerVisible }) => {
 
   const {
     shopNameTH,
-    setShopNameTH,
-    setCategoryName,
     addressProvinceName,
-    setAddressProvinceName,
+    setCriteria,
     performSearch,
   } = useSearchController();
 
@@ -42,7 +40,9 @@ const SearchBar = ({ setDrawerVisible }) => {
             })),
           ]}
           value={addressProvinceName}
-          onChange={(value) => setAddressProvinceName(value)}
+          onChange={(value) =>
+            setCriteria((c) => ({ ...c, addressProvinceName: value }))
+          }
           className="flex-grow-0 flex-shrink-0 w-48 hidden md:block"
         />
         <div className="fix flex border-l h-full w-full items-center">
@@ -71,7 +71,7 @@ const SearchBar = ({ setDrawerVisible }) => {
             }
             value={shopNameTH}
             onChange={({ target: { value } }) => {
-              setShopNameTH(value);
+              setCriteria((c) => ({ ...c, shopNameTH: value }));
             }}
             onPressEnter={performSearch}
             style={{

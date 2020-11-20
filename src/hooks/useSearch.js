@@ -28,7 +28,7 @@ const useSearch = () => {
     updateTrigger: false,
   });
 
-  const applyURLParams = useRef(false);
+  const appliedURLParams = useRef(false);
   const [loading, setLoading] = useState(true);
   const [searchResult, setSearchResult] = useState([]);
 
@@ -54,7 +54,7 @@ const useSearch = () => {
   };
 
   useEffect(() => {
-    if (applyURLParams.current) {
+    if (appliedURLParams.current) {
       performSearch(false);
     }
   }, [
@@ -67,56 +67,46 @@ const useSearch = () => {
   ]);
 
   useEffect(() => {
-    if (!isEmpty(router.query) && !applyURLParams.current) {
-      setCriteria((c) => ({
-        shopNameTH: query.searchQuery,
-        categoryName: query.category,
-        addressProvinceName: query.province,
-        priceLevel: isNaN(parseInt(query.priceLevel))
+    if (!isEmpty(router.query) && !appliedURLParams.current) {
+      const urlCriteria = {};
+      if (query.searchQuery) {
+        urlCriteria.shopNameTH = query.searchQuery;
+      }
+      if (query.categoryName) {
+        urlCriteria.categoryName = query.categoryName;
+      }
+      if (query.province) {
+        urlCriteria.addressProvinceName = query.province;
+      }
+      if (query.priceLevel) {
+        urlCriteria.priceLevel = isNaN(parseInt(query.priceLevel))
           ? query.priceLevel
-          : parseInt(query.priceLevel),
-        subcategoryName: query.subcategory,
+          : parseInt(query.priceLevel);
+      }
+      if (query.subcategory) {
+        urlCriteria.subcategoryName = query.subcategory;
+      }
+      setCriteria((c) => ({
+        ...c,
+        ...urlCriteria,
         updateTrigger: !c.updateTrigger,
       }));
-      applyURLParams.current = true;
+      appliedURLParams.current = true;
     }
   }, [router.query]);
 
   useEffect(() => {
     setTimeout(() => {
-      if (!applyURLParams.current) {
+      if (!appliedURLParams.current) {
         performSearch(false);
-        applyURLParams.current = true;
+        appliedURLParams.current = true;
       }
-    }, 1000);
+    }, 2000);
   }, []);
 
-  const setShopNameTH = (shopNameTH) =>
-    setCriteria({ ...criteria, shopNameTH });
-
-  const setCategoryName = (categoryName) =>
-    setCriteria({ ...criteria, categoryName });
-
-  const setAddressProvinceName = (addressProvinceName) =>
-    setCriteria({ ...criteria, addressProvinceName });
-
-  const setPriceLevel = (priceLevel) =>
-    setCriteria({ ...criteria, priceLevel });
-
-  const setSubcategoryName = (subcategoryName) =>
-    setCriteria({ ...criteria, subcategoryName });
-
   return {
-    shopNameTH: criteria.shopNameTH,
-    setShopNameTH,
-    categoryName: criteria.categoryName,
-    setCategoryName,
-    addressProvinceName: criteria.addressProvinceName,
-    setAddressProvinceName,
-    priceLevel: criteria.priceLevel,
-    setPriceLevel,
-    subcategoryName: criteria.subcategoryName,
-    setSubcategoryName,
+    ...criteria,
+    setCriteria,
     performSearch,
     searchResult,
     loading,
