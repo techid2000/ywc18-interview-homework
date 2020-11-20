@@ -69,7 +69,8 @@ const SearchBar = ({ setDrawerVisible }) => {
                 <SearchOutlined />
               </div>
             }
-            onChange={(value) => {
+            value={shopNameTH}
+            onChange={({ target: { value } }) => {
               setShopNameTH(value);
             }}
             onPressEnter={performSearch}
