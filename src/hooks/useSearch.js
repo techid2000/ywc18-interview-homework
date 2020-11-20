@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 import SearchContext from '../contexts/SearchContext';
 
@@ -13,36 +13,35 @@ import {
   SUBCATEGORIES,
 } from '../constants/searchConstants';
 import { getAllSearch } from '../api/searchAPI';
+import { isEmpty } from 'lodash';
 
 const useSearch = () => {
   const router = useRouter();
   const { query } = router;
 
-  const [shopNameTH, setShopNameTH] = useState(query.searchQuery ?? '');
-  const [categoryName, setCategoryName] = useState(CATEGORIES.ALL);
-  const [addressProvinceName, setAddressProvinceName] = useState(
-    LOCATIONS.NEAR_ME
-  );
-  const [priceLevel, setPriceLevel] = useState(PRICERANGE.ALL);
-  const [subcategoryName, setSubcategoryName] = useState(SUBCATEGORIES.ALL);
-  const [loading, setLoading] = useState(false);
+  const [criteria, setCriteria] = useState({
+    shopNameTH: '',
+    categoryName: CATEGORIES.ALL,
+    addressProvinceName: LOCATIONS.NEAR_ME,
+    priceLevel: PRICERANGE.ALL,
+    subcategoryName: SUBCATEGORIES.ALL,
+    updateTrigger: false,
+  });
+
+  const applyURLParams = useRef(false);
+  const [loading, setLoading] = useState(true);
   const [searchResult, setSearchResult] = useState([]);
 
   const performSearch = async (resetCriteria = true) => {
-    const criteria = {
-      shopNameTH,
-      categoryName,
-      addressProvinceName,
-      priceLevel,
-      subcategoryName,
-    };
-
     setLoading(true);
 
     if (resetCriteria) {
-      setCategoryName(CATEGORIES.ALL);
-      setPriceLevel(PRICERANGE.ALL);
-      setSubcategoryName(SUBCATEGORIES.ALL);
+      setCriteria({
+        ...criteria,
+        categoryName: CATEGORIES.ALL,
+        priceLevel: PRICERANGE.ALL,
+        subcategoryName: SUBCATEGORIES.ALL,
+      });
     }
 
     router.replace(getSearchReplaceURL(criteria));
@@ -51,35 +50,72 @@ const useSearch = () => {
       getFilteredSearchResult((await getAllSearch()).allSearchResult, criteria)
     );
 
-    // await new Promise((resolve) => setTimeout(() => resolve(), 500));
-
     setLoading(false);
   };
 
   useEffect(() => {
-    performSearch(false);
-  }, [categoryName, addressProvinceName, priceLevel, subcategoryName]);
+    if (applyURLParams.current) {
+      performSearch(false);
+    }
+  }, [
+    criteria.categoryName,
+    criteria.addressProvinceName,
+    criteria.priceLevel,
+    criteria.subcategoryName,
+
+    criteria.updateTrigger,
+  ]);
 
   useEffect(() => {
-    setShopNameTH(query.shopNameTH ?? shopNameTH);
-    setShopNameTH(query.category ?? categoryName);
-    setShopNameTH(query.address ?? addressProvinceName);
-    setShopNameTH(query.priceLevel ?? priceLevel);
-    setShopNameTH(query.subcategory ?? subcategoryName);
+    if (!isEmpty(router.query) && !applyURLParams.current) {
+      setCriteria((c) => ({
+        shopNameTH: query.searchQuery,
+        categoryName: query.category,
+        addressProvinceName: query.province,
+        priceLevel: isNaN(parseInt(query.priceLevel))
+          ? query.priceLevel
+          : parseInt(query.priceLevel),
+        subcategoryName: query.subcategory,
+        updateTrigger: !c.updateTrigger,
+      }));
+      applyURLParams.current = true;
+    }
+  }, [router.query]);
 
-    performSearch(false);
+  useEffect(() => {
+    setTimeout(() => {
+      if (!applyURLParams.current) {
+        performSearch(false);
+        applyURLParams.current = true;
+      }
+    }, 1000);
   }, []);
 
+  const setShopNameTH = (shopNameTH) =>
+    setCriteria({ ...criteria, shopNameTH });
+
+  const setCategoryName = (categoryName) =>
+    setCriteria({ ...criteria, categoryName });
+
+  const setAddressProvinceName = (addressProvinceName) =>
+    setCriteria({ ...criteria, addressProvinceName });
+
+  const setPriceLevel = (priceLevel) =>
+    setCriteria({ ...criteria, priceLevel });
+
+  const setSubcategoryName = (subcategoryName) =>
+    setCriteria({ ...criteria, subcategoryName });
+
   return {
-    shopNameTH,
+    shopNameTH: criteria.shopNameTH,
     setShopNameTH,
-    categoryName,
+    categoryName: criteria.categoryName,
     setCategoryName,
-    addressProvinceName,
+    addressProvinceName: criteria.addressProvinceName,
     setAddressProvinceName,
-    priceLevel,
+    priceLevel: criteria.priceLevel,
     setPriceLevel,
-    subcategoryName,
+    subcategoryName: criteria.subcategoryName,
     setSubcategoryName,
     performSearch,
     searchResult,

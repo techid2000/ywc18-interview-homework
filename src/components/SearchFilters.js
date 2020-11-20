@@ -81,7 +81,11 @@ const SearchFilters = () => {
             value: index + 1,
           })),
         ]}
-        value={priceLevel}
+        value={
+          isNaN(parseInt(priceLevel))
+            ? priceLevel
+            : searchMeta.priceRange[parseInt(priceLevel) - 1]
+        }
         onChange={(value) => setPriceLevel(value)}
       />
       {categoryName !== CATEGORIES.ALL && (
