@@ -4,6 +4,8 @@ import {
   getRecommendedItemsViewMeta,
 } from '../utils/searchViewUtils';
 
+import DOMPurify from 'dompurify';
+
 const { Tag, Divider } = require('antd');
 
 const SearchResultMerchantCard = ({ merchant }) => {
@@ -61,7 +63,9 @@ const SearchResultMerchantCard = ({ merchant }) => {
           <Divider />
         </div>
         <div
-          dangerouslySetInnerHTML={{ __html: highlightText }}
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(highlightText),
+          }}
           className="text-sm font-normal text-ash-400 mb-2"
         />
         <div className="text-sm font-normal text-ash-400 mb-2">
